@@ -1,0 +1,62 @@
+@startuml
+participant Actor
+Actor -> Worker : main
+activate Worker
+Worker -> Task : new
+activate Task
+Task --> Worker
+deactivate Task
+Worker -> Worker : new
+activate Worker
+Worker -> WorkerState : new
+activate WorkerState
+WorkerState --> Worker
+deactivate WorkerState
+Worker -> Worker : bindExchangeToChannelRabbitMQ
+activate Worker
+Worker --> Worker
+deactivate Worker
+Worker -> Worker : attachConsumerToChannelExchangeWithKey
+activate Worker
+Worker -> Worker : λ→
+activate Worker
+Worker -> Worker : stopGa
+activate Worker
+Worker --> Worker
+deactivate Worker
+Worker -> Worker : sendChoiceMessageToParticipants
+activate Worker
+Worker --> Worker
+deactivate Worker
+Worker --> Worker
+deactivate Worker
+Worker -> Worker : λ→
+activate Worker
+Worker --> Worker
+deactivate Worker
+Worker --> Worker
+deactivate Worker
+Worker -> GeneticAlgorithmJSSP : new
+activate GeneticAlgorithmJSSP
+GeneticAlgorithmJSSP --> Worker
+deactivate GeneticAlgorithmJSSP
+Worker -> Worker : consumeGa
+activate Worker
+Worker -> Worker : λ→
+activate Worker
+Worker --> Worker
+deactivate Worker
+Worker -> Worker : λ→
+activate Worker
+Worker --> Worker
+deactivate Worker
+Worker --> Worker
+deactivate Worker
+Worker -> GeneticAlgorithmJSSP : run
+activate GeneticAlgorithmJSSP
+GeneticAlgorithmJSSP --> Worker
+deactivate GeneticAlgorithmJSSP
+Worker --> Worker
+deactivate Worker
+return
+@enduml

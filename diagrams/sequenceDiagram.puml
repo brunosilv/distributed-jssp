@@ -1,0 +1,394 @@
+@startuml
+participant Actor
+Actor -> JobShopClient : playService
+activate JobShopClient
+JobShopClient -> UserFactoryRI : register
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : register
+activate UserFactoryImpl
+UserFactoryImpl -> DBMockup : exists
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl -> DBMockup : register
+activate DBMockup
+DBMockup -> DBMockup : exists
+activate DBMockup
+DBMockup --> DBMockup
+deactivate DBMockup
+DBMockup -> ClientUser : new
+activate ClientUser
+ClientUser --> DBMockup
+deactivate ClientUser
+DBMockup -> ClientUser : toString
+activate ClientUser
+ClientUser --> DBMockup
+deactivate ClientUser
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> JobShopClient
+deactivate UserFactoryRI
+JobShopClient -> UserFactoryRI : login
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : login
+activate UserFactoryImpl
+UserFactoryImpl -> DBMockup : exists
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl -> ClientUser : new
+activate ClientUser
+ClientUser --> UserFactoryImpl
+deactivate ClientUser
+UserFactoryImpl -> UserSessionImpl : new
+activate UserSessionImpl
+UserSessionImpl --> UserFactoryImpl
+deactivate UserSessionImpl
+UserFactoryImpl -> DBMockup : addSession
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> JobShopClient
+deactivate UserFactoryRI
+JobShopClient -> Task : new
+activate Task
+Task --> JobShopClient
+deactivate Task
+JobShopClient -> UserSessionRI : print
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : print
+activate UserSessionImpl
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> UserSessionRI : createJobGroup
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : createJobGroup
+activate UserSessionImpl
+UserSessionImpl -> SubjectImpl : new
+activate SubjectImpl
+SubjectImpl -> State : new
+activate State
+State --> SubjectImpl
+deactivate State
+SubjectImpl --> UserSessionImpl
+deactivate SubjectImpl
+UserSessionImpl -> UserFactoryRI : createJobGroup
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : createJobGroup
+activate UserFactoryImpl
+UserFactoryImpl -> DBMockup : addJobGroup
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl -> DBMockup : printJobGroups
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> UserSessionImpl
+deactivate UserFactoryRI
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> ObserverImpl : new
+activate ObserverImpl
+ObserverImpl -> WorkerState : new
+activate WorkerState
+WorkerState --> ObserverImpl
+deactivate WorkerState
+ObserverImpl --> JobShopClient
+deactivate ObserverImpl
+JobShopClient -> ObserverImpl : new
+activate ObserverImpl
+ObserverImpl -> WorkerState : new
+activate WorkerState
+WorkerState --> ObserverImpl
+deactivate WorkerState
+ObserverImpl --> JobShopClient
+deactivate ObserverImpl
+JobShopClient -> ObserverImpl : new
+activate ObserverImpl
+ObserverImpl -> WorkerState : new
+activate WorkerState
+WorkerState --> ObserverImpl
+deactivate WorkerState
+ObserverImpl --> JobShopClient
+deactivate ObserverImpl
+JobShopClient -> UserSessionRI : attachWorkerToJobGroup
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : attachWorkerToJobGroup
+activate UserSessionImpl
+UserSessionImpl -> SubjectRI : attach
+activate SubjectRI
+SubjectRI -> SubjectImpl : attach
+activate SubjectImpl
+SubjectImpl -> ObserverRI : changeMyState
+activate ObserverRI
+ObserverRI -> ObserverImpl : changeMyState
+activate ObserverImpl
+ObserverImpl --> ObserverRI
+deactivate ObserverImpl
+ObserverRI --> SubjectImpl
+deactivate ObserverRI
+SubjectImpl --> SubjectRI
+deactivate SubjectImpl
+SubjectRI --> UserSessionImpl
+deactivate SubjectRI
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> UserSessionRI : attachWorkerToJobGroup
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : attachWorkerToJobGroup
+activate UserSessionImpl
+UserSessionImpl -> SubjectRI : attach
+activate SubjectRI
+SubjectRI -> SubjectImpl : attach
+activate SubjectImpl
+SubjectImpl -> ObserverRI : changeMyState
+activate ObserverRI
+ObserverRI -> ObserverImpl : changeMyState
+activate ObserverImpl
+ObserverImpl --> ObserverRI
+deactivate ObserverImpl
+ObserverRI --> SubjectImpl
+deactivate ObserverRI
+SubjectImpl --> SubjectRI
+deactivate SubjectImpl
+SubjectRI --> UserSessionImpl
+deactivate SubjectRI
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> UserSessionRI : attachWorkerToJobGroup
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : attachWorkerToJobGroup
+activate UserSessionImpl
+UserSessionImpl -> SubjectRI : attach
+activate SubjectRI
+SubjectRI -> SubjectImpl : attach
+activate SubjectImpl
+SubjectImpl -> ObserverRI : changeMyState
+activate ObserverRI
+ObserverRI -> ObserverImpl : changeMyState
+activate ObserverImpl
+ObserverImpl --> ObserverRI
+deactivate ObserverImpl
+ObserverRI --> SubjectImpl
+deactivate ObserverRI
+SubjectImpl --> SubjectRI
+deactivate SubjectImpl
+SubjectRI --> UserSessionImpl
+deactivate SubjectRI
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> UserSessionRI : notifyAllWorkersOfJobGroup
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : notifyAllWorkersOfJobGroup
+activate UserSessionImpl
+UserSessionImpl -> SubjectRI : notifyAllWorkers
+activate SubjectRI
+SubjectRI -> SubjectImpl : notifyAllWorkers
+activate SubjectImpl
+SubjectImpl -> ObserverRI : update
+activate ObserverRI
+ObserverRI -> ObserverImpl : update
+activate ObserverImpl
+ObserverImpl -> ObserverImpl : runTS
+activate ObserverImpl
+ObserverImpl -> TabuSearchJSSP : new
+activate TabuSearchJSSP
+TabuSearchJSSP --> ObserverImpl
+deactivate TabuSearchJSSP
+ObserverImpl -> TabuSearchJSSP : run
+activate TabuSearchJSSP
+TabuSearchJSSP --> ObserverImpl
+deactivate TabuSearchJSSP
+ObserverImpl -> ObserverImpl : notifyJobGroup
+activate ObserverImpl
+ObserverImpl --> ObserverImpl
+deactivate ObserverImpl
+ObserverImpl --> ObserverImpl
+deactivate ObserverImpl
+ObserverImpl --> ObserverRI
+deactivate ObserverImpl
+ObserverRI --> SubjectImpl
+deactivate ObserverRI
+SubjectImpl --> SubjectRI
+deactivate SubjectImpl
+SubjectRI --> UserSessionImpl
+deactivate SubjectRI
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> UserSessionRI : logout
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : logout
+activate UserSessionImpl
+UserSessionImpl -> DBMockup : removeSession
+activate DBMockup
+DBMockup --> UserSessionImpl
+deactivate DBMockup
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> JobShopClient : initialMenu
+activate JobShopClient
+JobShopClient -> UserFactoryRI : register
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : register
+activate UserFactoryImpl
+UserFactoryImpl -> DBMockup : exists
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl -> DBMockup : register
+activate DBMockup
+DBMockup -> DBMockup : exists
+activate DBMockup
+DBMockup --> DBMockup
+deactivate DBMockup
+DBMockup -> ClientUser : new
+activate ClientUser
+ClientUser --> DBMockup
+deactivate ClientUser
+DBMockup -> ClientUser : toString
+activate ClientUser
+ClientUser --> DBMockup
+deactivate ClientUser
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> JobShopClient
+deactivate UserFactoryRI
+JobShopClient -> UserFactoryRI : login
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : login
+activate UserFactoryImpl
+UserFactoryImpl -> DBMockup : exists
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl -> ClientUser : new
+activate ClientUser
+ClientUser --> UserFactoryImpl
+deactivate ClientUser
+UserFactoryImpl -> UserSessionImpl : new
+activate UserSessionImpl
+UserSessionImpl --> UserFactoryImpl
+deactivate UserSessionImpl
+UserFactoryImpl -> DBMockup : addSession
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> JobShopClient
+deactivate UserFactoryRI
+JobShopClient -> JobShopClient : operationsMenu
+activate JobShopClient
+JobShopClient -> ClientUser : toString
+activate ClientUser
+ClientUser --> JobShopClient
+deactivate ClientUser
+JobShopClient -> UserFactoryRI : GetWorkers
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : GetWorkers
+activate UserFactoryImpl
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> JobShopClient
+deactivate UserFactoryRI
+JobShopClient -> ObserverImpl : new
+activate ObserverImpl
+ObserverImpl -> WorkerState : new
+activate WorkerState
+WorkerState --> ObserverImpl
+deactivate WorkerState
+ObserverImpl --> JobShopClient
+deactivate ObserverImpl
+JobShopClient -> ObserverImpl : toString
+activate ObserverImpl
+ObserverImpl --> JobShopClient
+deactivate ObserverImpl
+JobShopClient -> Task : new
+activate Task
+Task --> JobShopClient
+deactivate Task
+JobShopClient -> UserSessionRI : createJobGroup
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : createJobGroup
+activate UserSessionImpl
+UserSessionImpl -> SubjectImpl : new
+activate SubjectImpl
+SubjectImpl -> State : new
+activate State
+State --> SubjectImpl
+deactivate State
+SubjectImpl --> UserSessionImpl
+deactivate SubjectImpl
+UserSessionImpl -> UserFactoryRI : createJobGroup
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : createJobGroup
+activate UserFactoryImpl
+UserFactoryImpl -> DBMockup : addJobGroup
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl -> DBMockup : printJobGroups
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> UserSessionImpl
+deactivate UserFactoryRI
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient -> UserFactoryRI : listJobGroups
+activate UserFactoryRI
+UserFactoryRI -> UserFactoryImpl : listJobGroups
+activate UserFactoryImpl
+UserFactoryImpl -> DBMockup : printJobGroups
+activate DBMockup
+DBMockup --> UserFactoryImpl
+deactivate DBMockup
+UserFactoryImpl --> UserFactoryRI
+deactivate UserFactoryImpl
+UserFactoryRI --> JobShopClient
+deactivate UserFactoryRI
+JobShopClient -> UserSessionRI : logout
+activate UserSessionRI
+UserSessionRI -> UserSessionImpl : logout
+activate UserSessionImpl
+UserSessionImpl -> DBMockup : removeSession
+activate DBMockup
+DBMockup --> UserSessionImpl
+deactivate DBMockup
+UserSessionImpl --> UserSessionRI
+deactivate UserSessionImpl
+UserSessionRI --> JobShopClient
+deactivate UserSessionRI
+JobShopClient --> JobShopClient
+deactivate JobShopClient
+JobShopClient --> JobShopClient
+deactivate JobShopClient
+return
+@enduml

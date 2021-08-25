@@ -1,0 +1,8 @@
+edu.ufp.inf.sd.project.client
+edu.ufp.inf.sd.project.consumer
+edu.ufp.inf.sd.project.producer
+edu.ufp.inf.sd.project.server
+edu.ufp.inf.sd.project.util.geneticalgorithm
+edu.ufp.inf.sd.project.util.rmisetup
+edu.ufp.inf.sd.project.util.tabusearch
+edu.ufp.inf.sd.project.util.threading
