@@ -74,6 +74,7 @@ public class JobGroup {
     public static void main(String[] argv) throws IOException, TimeoutException {
 
         JobGroup jobGroup = new JobGroup(new Task("edu/ufp/inf/sd/project/data/abz5.txt", new File("edu/ufp/inf/sd/project/data/abz5.txt")));
+        sleep(10000);
         jobGroup.sendMessage("stop");
 
     }

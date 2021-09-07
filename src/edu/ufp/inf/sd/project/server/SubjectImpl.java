@@ -143,7 +143,6 @@ public class SubjectImpl extends UnicastRemoteObject implements SubjectRI {
                 }
                 obsWinner.addCredits(10);
                 for (ObserverRI obs : this.observers) {
-                    if (!obs.equals(obsWinner))
                         obs.addCredits(1);
                 }
                 //Then we have to remove the credits from the onwer of the JobGroup
